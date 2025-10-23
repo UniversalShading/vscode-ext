@@ -44,7 +44,28 @@
                 "label": "USL File Icons",
                 "path": "./fileicons/usl-icon-theme.json"
             }
-        ]
+        ],
+        "configurationDefaults": {
+            "editor.tokenColorCustomizations": {
+                "[*]": {
+                    "textMateRules": [
+                        {
+                            "scope": "entity.name.function.decorator.usl",
+                            "settings": {
+                                "foreground": "#C586C0",
+                                "fontStyle": "bold"
+                            }
+                        },
+                        {
+                            "scope": "variable.other.member.usl",
+                            "settings": {
+                                "foreground": "#C16655"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

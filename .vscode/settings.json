@@ -1,0 +1,20 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "entity.name.function.decorator.usl",
+        "settings": {
+          "foreground": "#C586C0",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "variable.other.member.usl",
+        "settings": {
+          "foreground": "#9CDCFE",
+          "fontStyle": ""
+        }
+      }
+    ]
+  }
+}
