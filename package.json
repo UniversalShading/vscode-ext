@@ -61,6 +61,12 @@
                             "settings": {
                                 "foreground": "#C16655"
                             }
+                        },
+                        {
+                            "scope": "keyword.operator.arrow.usl",
+                            "settings": {
+                                "foreground": "#a678ce"
+                            }
                         }
                     ]
                 }

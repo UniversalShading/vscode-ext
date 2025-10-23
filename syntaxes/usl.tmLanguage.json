@@ -341,6 +341,11 @@
 		"operators": {
 			"patterns": [
 				{
+					"comment": "Arrow must be before arithmetic to avoid matching - and >",
+					"name": "keyword.operator.arrow.usl",
+					"match": "->"
+				},
+				{
 					"name": "keyword.operator.arithmetic.usl",
 					"match": "\\+|\\-|\\*|\\/|%"
 				},
@@ -359,10 +364,6 @@
 				{
 					"name": "keyword.operator.assignment.usl",
 					"match": "=|\\+=|\\-=|\\*=|\\/=|%=|&=|\\|=|\\^=|<<=|>>="
-				},
-				{
-					"name": "keyword.operator.arrow.usl",
-					"match": "->"
 				},
 				{
 					"name": "keyword.operator.access.usl",
