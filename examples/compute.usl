@@ -1,0 +1,97 @@
+// Universal Shading Language Example
+// Compute Shader for Particle System
+
+struct Particle {
+    position: float3;
+    velocity: float3;
+    life: float;
+    size: float;
+}
+
+struct SimulationParams {
+    deltaTime: float;
+    gravity: float3;
+    damping: float;
+    numParticles: uint;
+}
+
+// Random number generator
+fn random(seed: float2) -> float {
+    return fract(sin(dot(seed, float2(12.9898, 78.233))) * 43758.5453)
+}
+
+// Compute kernel for particle simulation
+kern particleSimulation(
+    particles: buffer<Particle>(0),
+    params: Uniform(0),
+    threadId: uint3 #thread_position_in_grid
+) -> void {
+    let index = threadId.x
+    
+    if (index >= params.numParticles) {
+        return
+    }
+    
+    var particle = particles[index]
+    
+    // Update particle life
+    particle.life = particle.life - params.deltaTime
+    
+    if (particle.life <= 0.0) {
+        // Reset particle
+        particle.position = float3(0.0, 0.0, 0.0)
+        particle.velocity = float3(
+            random(float2(index, 0.0)) * 2.0 - 1.0,
+            random(float2(index, 1.0)) * 2.0,
+            random(float2(index, 2.0)) * 2.0 - 1.0
+        )
+        particle.life = random(float2(index, 3.0)) * 5.0 + 1.0
+        particle.size = random(float2(index, 4.0)) * 0.5 + 0.1
+    } else {
+        // Apply gravity
+        particle.velocity = particle.velocity + params.gravity * params.deltaTime
+        
+        // Apply damping
+        particle.velocity = particle.velocity * params.damping
+        
+        // Update position
+        particle.position = particle.position + particle.velocity * params.deltaTime
+    }
+    
+    // Write back to buffer
+    particles[index] = particle
+}
+
+// Compute shader for image processing
+kern blurImage(
+    input: texture2d<float>(0),
+    output: texture2d<float, write>(1),
+    threadId: uint2 #thread_position_in_grid
+) -> void {
+    let size = uint2(input.get_width(), input.get_height())
+    
+    if (threadId.x >= size.x || threadId.y >= size.y) {
+        return
+    }
+    
+    // 3x3 Gaussian blur kernel
+    let weights = [
+        1.0/16.0, 2.0/16.0, 1.0/16.0,
+        2.0/16.0, 4.0/16.0, 2.0/16.0,
+        1.0/16.0, 2.0/16.0, 1.0/16.0
+    ]
+    
+    var color = float4(0.0)
+    var weightIndex = 0
+    
+    for (var y = -1; y <= 1; y = y + 1) {
+        for (var x = -1; x <= 1; x = x + 1) {
+            let coord = int2(threadId) + int2(x, y)
+            let sample = input.read(uint2(coord))
+            color = color + sample * weights[weightIndex]
+            weightIndex = weightIndex + 1
+        }
+    }
+    
+    output.write(color, threadId)
+}

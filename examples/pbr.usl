@@ -1,0 +1,150 @@
+// Universal Shading Language Example
+// Advanced Shader with PBR Lighting
+
+struct Material {
+    albedo: float3;
+    metallic: float;
+    roughness: float;
+    ao: float;
+}
+
+struct Light {
+    position: float3;
+    color: float3;
+    intensity: float;
+}
+
+// Helper functions
+fn saturate(x: float) -> float {
+    return clamp(x, 0.0, 1.0)
+}
+
+fn pow5(x: float) -> float {
+    let x2 = x * x
+    return x2 * x2 * x
+}
+
+// Fresnel-Schlick approximation
+fn fresnelSchlick(cosTheta: float, F0: float3) -> float3 {
+    return F0 + (float3(1.0) - F0) * pow5(1.0 - cosTheta)
+}
+
+// Distribution GGX/Trowbridge-Reitz
+fn distributionGGX(N: float3, H: float3, roughness: float) -> float {
+    let a = roughness * roughness
+    let a2 = a * a
+    let NdotH = saturate(dot(N, H))
+    let NdotH2 = NdotH * NdotH
+    
+    let nom = a2
+    let denom = NdotH2 * (a2 - 1.0) + 1.0
+    let denom2 = 3.14159265359 * denom * denom
+    
+    return nom / denom2
+}
+
+// Geometry function - Schlick-GGX
+fn geometrySchlickGGX(NdotV: float, roughness: float) -> float {
+    let r = roughness + 1.0
+    let k = (r * r) / 8.0
+    
+    return NdotV / (NdotV * (1.0 - k) + k)
+}
+
+fn geometrySmith(N: float3, V: float3, L: float3, roughness: float) -> float {
+    let NdotV = saturate(dot(N, V))
+    let NdotL = saturate(dot(N, L))
+    let ggx2 = geometrySchlickGGX(NdotV, roughness)
+    let ggx1 = geometrySchlickGGX(NdotL, roughness)
+    
+    return ggx1 * ggx2
+}
+
+// PBR lighting calculation
+fn calculatePBR(
+    N: float3,
+    V: float3,
+    L: float3,
+    material: Material,
+    lightColor: float3
+) -> float3 {
+    let H = normalize(V + L)
+    
+    // Calculate base reflectivity
+    var F0 = float3(0.04)
+    F0 = mix(F0, material.albedo, material.metallic)
+    
+    // Cook-Torrance BRDF
+    let NDF = distributionGGX(N, H, material.roughness)
+    let G = geometrySmith(N, V, L, material.roughness)
+    let F = fresnelSchlick(saturate(dot(H, V)), F0)
+    
+    let numerator = NDF * G * F
+    let denominator = 4.0 * saturate(dot(N, V)) * saturate(dot(N, L)) + 0.0001
+    let specular = numerator / denominator
+    
+    // Calculate diffuse
+    let kS = F
+    var kD = float3(1.0) - kS
+    kD = kD * (1.0 - material.metallic)
+    
+    let NdotL = saturate(dot(N, L))
+    let diffuse = kD * material.albedo / 3.14159265359
+    
+    return (diffuse + specular) * lightColor * NdotL
+}
+
+// Fragment shader with PBR
+frag pbrShader(
+    in: FragmentIn as stage_in,
+    albedoMap: texture2d<half>(0),
+    normalMap: texture2d<half>(1),
+    metallicMap: texture2d<half>(2),
+    roughnessMap: texture2d<half>(3),
+    aoMap: texture2d<half>(4),
+    lights: buffer<Light>(0),
+    uniforms: Uniform(1)
+) -> float4 {
+    let texSampler = sampler(.linear, .linear, .repeat)
+    
+    // Sample material properties
+    let albedo = float3(albedoMap.sample(texSampler, in.texCoord).rgb)
+    let metallic = metallicMap.sample(texSampler, in.texCoord).r
+    let roughness = roughnessMap.sample(texSampler, in.texCoord).r
+    let ao = aoMap.sample(texSampler, in.texCoord).r
+    
+    // Create material
+    var material = Material()
+    material.albedo = albedo
+    material.metallic = metallic
+    material.roughness = roughness
+    material.ao = ao
+    
+    // Calculate lighting
+    let N = normalize(in.normal)
+    let V = normalize(uniforms.cameraPos - in.worldPos)
+    
+    var Lo = float3(0.0)
+    
+    // Iterate over lights (pseudo-code, actual implementation depends on buffer access)
+    for (var i = 0; i < uniforms.numLights; i = i + 1) {
+        let light = lights[i]
+        let L = normalize(light.position - in.worldPos)
+        let radiance = light.color * light.intensity
+        
+        Lo = Lo + calculatePBR(N, V, L, material, radiance)
+    }
+    
+    // Ambient lighting
+    let ambient = float3(0.03) * albedo * ao
+    let color = ambient + Lo
+    
+    // HDR tonemapping
+    let mapped = color / (color + float3(1.0))
+    
+    // Gamma correction
+    let gamma = 2.2
+    let corrected = pow(mapped, float3(1.0 / gamma))
+    
+    return float4(corrected, 1.0)
+}

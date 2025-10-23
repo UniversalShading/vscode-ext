@@ -1,0 +1,520 @@
+// ==============================================================================
+// Universal Shading Language - Comprehensive Syntax Test
+// ==============================================================================
+// This file demonstrates all features of USL syntax highlighting and IntelliSense
+
+// ==============================================================================
+// 1. COMMENTS
+// ==============================================================================
+
+// Single-line comment
+/* Block comment */
+/* 
+   Multi-line
+   block comment
+*/
+
+// ==============================================================================
+// 2. STRUCT DEFINITIONS
+// ==============================================================================
+
+struct Vertex {
+    position: float3 #position;
+    normal: float3 #normal;
+    tangent: float3 #tangent;
+    texCoord: float2 #texcoord;
+    color: float4 #color;
+}
+
+struct VertexOut {
+    position: float4 #position;
+    worldPos: float3;
+    normal: float3;
+    tangent: float3;
+    texCoord: float2;
+    color: float4;
+}
+
+struct Material {
+    albedo: float3;
+    metallic: float;
+    roughness: float;
+    ao: float;
+    emissive: float3;
+}
+
+struct Light {
+    position: float3;
+    direction: float3;
+    color: float3;
+    intensity: float;
+    type: int;
+}
+
+// ==============================================================================
+// 3. FUNCTION DEFINITIONS
+// ==============================================================================
+
+// Standard function
+fn calculateDiffuse(normal: float3, lightDir: float3) -> float {
+    return max(dot(normal, lightDir), 0.0)
+}
+
+// Function with multiple parameters
+fn calculateSpecular(normal: float3, viewDir: float3, lightDir: float3, shininess: float) -> float {
+    let halfVector = normalize(viewDir + lightDir)
+    return pow(max(dot(normal, halfVector), 0.0), shininess)
+}
+
+// Generic function with type parameter
+fn lerp<T>(a: T, b: T, t: float) -> T {
+    return a * (1.0 - t) + b * t
+}
+
+// Generic function with inferred types
+fn add<T>(a: T, b: T) -> a + b
+
+// Multiple generic parameters
+fn mix<T, U>(a: T, b: T, factor: U) -> T {
+    return a * (1.0 - factor) + b * factor
+}
+
+// Function with shorthand syntax
+fn square(x: float) -> x * x
+fn cube(x: float) -> x * x * x
+
+// ==============================================================================
+// 4. VARIABLES AND CONSTANTS
+// ==============================================================================
+
+fn demonstrateVariables() -> void {
+    // Mutable variable
+    var mutableVar: float = 1.0;
+    mutableVar = 2.0;
+    
+    // Immutable variable
+    let immutableVar: float = 3.14159;
+    
+    // Const (compile-time constant)
+    const PI: float = 3.14159265359;
+    const TWO_PI: float = 6.28318530718;
+    const HALF_PI: float = 1.57079632679;
+    
+    // Type inference
+    var inferredInt = 42;
+    let inferredFloat = 3.14;
+    var inferredVector = float3(1.0, 2.0, 3.0);
+}
+
+// ==============================================================================
+// 5. TYPES - SCALARS
+// ==============================================================================
+
+fn demonstrateScalarTypes() -> void {
+    // Boolean
+    var boolValue: bool = true;
+    
+    // Integer types
+    var intValue: int = 42;
+    var uintValue: uint = 42;
+    var int8Value: int8 = 127;
+    var int16Value: int16 = 32767;
+    var int32Value: int32 = 2147483647;
+    var int64Value: int64 = 9223372036854775807;
+    var uint8Value: uint8 = 255;
+    var uint16Value: uint16 = 65535;
+    var uint32Value: uint32 = 4294967295;
+    var uint64Value: uint64 = 18446744073709551615;
+    
+    // Floating-point types
+    var floatValue: float = 3.14;
+    var halfValue: half = 1.5;
+    var doubleValue: double = 3.141592653589793;
+    var float16Value: float16 = 1.0;
+    var float32Value: float32 = 1.0;
+    var float64Value: float64 = 1.0;
+}
+
+// ==============================================================================
+// 6. TYPES - VECTORS
+// ==============================================================================
+
+fn demonstrateVectorTypes() -> void {
+    // Float vectors
+    var vec2: float2 = float2(1.0, 2.0);
+    var vec3: float3 = float3(1.0, 2.0, 3.0);
+    var vec4: float4 = float4(1.0, 2.0, 3.0, 4.0);
+    
+    // Int vectors
+    var ivec2: int2 = int2(1, 2);
+    var ivec3: int3 = int3(1, 2, 3);
+    var ivec4: int4 = int4(1, 2, 3, 4);
+    
+    // Uint vectors
+    var uvec2: uint2 = uint2(1, 2);
+    var uvec3: uint3 = uint3(1, 2, 3);
+    var uvec4: uint4 = uint4(1, 2, 3, 4);
+    
+    // Half vectors
+    var hvec2: half2 = half2(1.0, 2.0);
+    var hvec3: half3 = half3(1.0, 2.0, 3.0);
+    var hvec4: half4 = half4(1.0, 2.0, 3.0, 4.0);
+    
+    // Bool vectors
+    var bvec2: bool2 = bool2(true, false);
+    var bvec3: bool3 = bool3(true, false, true);
+    var bvec4: bool4 = bool4(true, false, true, false);
+}
+
+// ==============================================================================
+// 7. TYPES - MATRICES
+// ==============================================================================
+
+fn demonstrateMatrixTypes() -> void {
+    // 2x2 matrices
+    var mat2x2: float2x2 = float2x2(1.0);
+    
+    // 3x3 matrices
+    var mat3x3: float3x3 = float3x3(1.0);
+    
+    // 4x4 matrices
+    var mat4x4: float4x4 = float4x4(1.0);
+    
+    // Non-square matrices
+    var mat2x3: float2x3 = float2x3(1.0);
+    var mat2x4: float2x4 = float2x4(1.0);
+    var mat3x2: float3x2 = float3x2(1.0);
+    var mat3x4: float3x4 = float3x4(1.0);
+    var mat4x2: float4x2 = float4x2(1.0);
+    var mat4x3: float4x3 = float4x3(1.0);
+}
+
+// ==============================================================================
+// 8. BUILT-IN FUNCTIONS - MATH
+// ==============================================================================
+
+fn demonstrateMathFunctions() -> void {
+    let x: float = 2.0;
+    let y: float = 3.0;
+    
+    // Basic math
+    let absValue = abs(-5.0);
+    let signValue = sign(-5.0);
+    let floorValue = floor(3.7);
+    let ceilValue = ceil(3.2);
+    let roundValue = round(3.5);
+    let fractValue = fract(3.7);
+    let truncValue = trunc(3.7);
+    
+    // Min/Max
+    let minValue = min(x, y);
+    let maxValue = max(x, y);
+    let clampValue = clamp(x, 0.0, 1.0);
+    let saturateValue = saturate(x);
+    
+    // Interpolation
+    let mixValue = mix(x, y, 0.5);
+    let stepValue = step(0.5, x);
+    let smoothValue = smoothstep(0.0, 1.0, x);
+    
+    // Power and exponential
+    let powValue = pow(x, y);
+    let expValue = exp(x);
+    let exp2Value = exp2(x);
+    let logValue = log(x);
+    let log2Value = log2(x);
+    let sqrtValue = sqrt(x);
+    let rsqrtValue = rsqrt(x);
+    
+    // Trigonometry
+    let sinValue = sin(x);
+    let cosValue = cos(x);
+    let tanValue = tan(x);
+    let asinValue = asin(0.5);
+    let acosValue = acos(0.5);
+    let atanValue = atan(x);
+    let atan2Value = atan2(y, x);
+    
+    // Conversion
+    let radiansValue = radians(180.0);
+    let degreesValue = degrees(3.14159);
+}
+
+// ==============================================================================
+// 9. BUILT-IN FUNCTIONS - VECTOR/GEOMETRY
+// ==============================================================================
+
+fn demonstrateVectorFunctions() -> void {
+    let v1 = float3(1.0, 0.0, 0.0);
+    let v2 = float3(0.0, 1.0, 0.0);
+    
+    // Vector operations
+    let dotProduct = dot(v1, v2);
+    let crossProduct = cross(v1, v2);
+    let lengthValue = length(v1);
+    let distanceValue = distance(v1, v2);
+    let normalizeValue = normalize(v1);
+    
+    // Reflection and refraction
+    let normal = float3(0.0, 0.0, 1.0);
+    let incident = float3(1.0, -1.0, 0.0);
+    let reflectValue = reflect(incident, normal);
+    let refractValue = refract(incident, normal, 1.33);
+}
+
+// ==============================================================================
+// 10. VERTEX SHADER
+// ==============================================================================
+
+vert vertexShader(
+    in: Vertex,
+    uniforms: Uniform(0)
+) -> VertexOut {
+    var out = VertexOut()
+    
+    // Transform position
+    let worldPos = uniforms.modelMatrix * float4(in.position, 1.0);
+    out.worldPos = worldPos.xyz;
+    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * worldPos;
+    
+    // Transform normal and tangent
+    out.normal = normalize((uniforms.normalMatrix * float4(in.normal, 0.0)).xyz);
+    out.tangent = normalize((uniforms.modelMatrix * float4(in.tangent, 0.0)).xyz);
+    
+    // Pass through attributes
+    out.texCoord = in.texCoord;
+    out.color = in.color;
+    
+    return out;
+}
+
+// Alternative syntax
+vertex basicVertexShader(in: Vertex) -> VertexOut {
+    var out = VertexOut()
+    out.position = float4(in.position, 1.0)
+    return out
+}
+
+// ==============================================================================
+// 11. FRAGMENT SHADER
+// ==============================================================================
+
+frag fragmentShader(
+    in: VertexOut as stage_in,
+    uniforms: Uniform(0),
+    albedoMap: texture2d<half>(0),
+    normalMap: texture2d<half>(1),
+    metallicRoughnessMap: texture2d<half>(2)
+) -> float4 {
+    
+    // Create sampler
+    let texSampler = sampler(.linear, .linear, .repeat);
+    
+    // Sample textures
+    let albedo = float3(albedoMap.sample(texSampler, in.texCoord).rgb);
+    let normalSample = normalMap.sample(texSampler, in.texCoord).xyz * 2.0 - 1.0;
+    let metallicRoughness = metallicRoughnessMap.sample(texSampler, in.texCoord).rg;
+    
+    let metallic = metallicRoughness.r;
+    let roughness = metallicRoughness.g;
+    
+    // Calculate lighting
+    let N = normalize(in.normal);
+    let V = normalize(uniforms.cameraPos - in.worldPos);
+    let L = normalize(uniforms.lightPos - in.worldPos);
+    let H = normalize(V + L);
+    
+    // Diffuse
+    let NdotL = max(dot(N, L), 0.0);
+    let diffuse = albedo * NdotL;
+    
+    // Specular
+    let NdotH = max(dot(N, H), 0.0);
+    let specular = pow(NdotH, (1.0 - roughness) * 128.0);
+    
+    // Combine
+    let color = diffuse + specular * (1.0 - metallic);
+    
+    return float4(color, 1.0);
+}
+
+// Alternative syntax
+fragment simpleFragmentShader(in: VertexOut) -> float4 {
+    return float4(1.0, 0.0, 0.0, 1.0)
+}
+
+// ==============================================================================
+// 12. COMPUTE SHADER
+// ==============================================================================
+
+kern computeShader(
+    inputBuffer: buffer<float4>(0),
+    outputBuffer: buffer<float4, write>(1),
+    uniforms: Uniform(0),
+    threadId: uint3 #thread_position_in_grid,
+    threadGroupId: uint3 #thread_position_in_threadgroup
+) -> void {
+    
+    let index = threadId.x + threadId.y * uniforms.width;
+    
+    if (index >= uniforms.totalElements) {
+        return
+    }
+    
+    // Read from input
+    let input = inputBuffer[index];
+    
+    // Process
+    var output = input * 2.0;
+    output = clamp(output, float4(0.0), float4(1.0));
+    
+    // Write to output
+    outputBuffer[index] = output;
+}
+
+// Alternative syntax
+kernel simpleKernel() -> void {
+    // Kernel operations
+}
+
+compute simpleCompute() -> void {
+    // Compute operations
+}
+
+// ==============================================================================
+// 13. CONTROL FLOW
+// ==============================================================================
+
+fn demonstrateControlFlow(x: float) -> float {
+    // If-else
+    if (x > 0.0) {
+        return x;
+    } else if (x < 0.0) {
+        return -x;
+    } else {
+        return 0.0;
+    }
+    
+    // For loop
+    var sum: float = 0.0;
+    for (var i = 0; i < 10; i = i + 1) {
+        sum = sum + float(i);
+    }
+    
+    // While loop
+    var count = 0;
+    while (count < 10) {
+        count = count + 1;
+    }
+    
+    // Switch (if supported)
+    switch (int(x)) {
+        case 0:
+            return 0.0;
+        case 1:
+            return 1.0;
+        default:
+            return x;
+    }
+    
+    return sum;
+}
+
+// ==============================================================================
+// 14. OPERATORS
+// ==============================================================================
+
+fn demonstrateOperators() -> void {
+    // Arithmetic
+    let a = 1.0 + 2.0;
+    let b = 3.0 - 1.0;
+    let c = 2.0 * 3.0;
+    let d = 6.0 / 2.0;
+    let e = 7.0 % 3.0;
+    
+    // Comparison
+    let eq = (a == b);
+    let ne = (a != b);
+    let lt = (a < b);
+    let gt = (a > b);
+    let le = (a <= b);
+    let ge = (a >= b);
+    
+    // Logical
+    let and = (true && false);
+    let or = (true || false);
+    let not = !true;
+    
+    // Bitwise
+    let bitwiseAnd = 5 & 3;
+    let bitwiseOr = 5 | 3;
+    let bitwiseXor = 5 ^ 3;
+    let bitwiseNot = ~5;
+    let leftShift = 1 << 3;
+    let rightShift = 8 >> 2;
+    
+    // Assignment
+    var x = 1.0;
+    x = x + 1.0;
+    x += 1.0;
+    x -= 1.0;
+    x *= 2.0;
+    x /= 2.0;
+    x %= 2.0;
+}
+
+// ==============================================================================
+// 15. TEXTURE OPERATIONS
+// ==============================================================================
+
+fn demonstrateTextureOperations(
+    tex2d: texture2d<float>,
+    tex3d: texture3d<float>,
+    texCube: textureCube<float>,
+    coord: float2
+) -> float4 {
+    
+    // Create sampler with different filter modes
+    let linearSampler = sampler(.linear, .linear, .clamp);
+    let nearestSampler = sampler(.nearest, .nearest, .repeat);
+    
+    // Sample texture
+    let color = tex2d.sample(linearSampler, coord);
+    
+    // Read texel
+    let texel = tex2d.read(uint2(coord * 512.0));
+    
+    // Sample with LOD
+    // let colorLod = tex2d.sample(linearSampler, coord, level(2.0));
+    
+    // Sample with gradient
+    // let colorGrad = tex2d.sample(linearSampler, coord, gradient2d(ddx, ddy));
+    
+    return color;
+}
+
+// ==============================================================================
+// 16. NUMERIC LITERALS
+// ==============================================================================
+
+fn demonstrateLiterals() -> void {
+    // Integer literals
+    let decInt = 42;
+    let hexInt = 0xFF;
+    let octInt = 0o77;
+    let binInt = 0b1010;
+    
+    // Float literals
+    let floatDec = 3.14;
+    let floatExp = 1.5e-3;
+    let floatSuffix = 3.14f;
+    let halfSuffix = 1.5h;
+    
+    // Boolean literals
+    let trueValue = true;
+    let falseValue = false;
+}
+
+// ==============================================================================
+// END OF SYNTAX TEST
+// ==============================================================================

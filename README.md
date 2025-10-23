@@ -1,4 +1,4 @@
-# usl README
+# 🧊 Universal Shading - Extension
 
 This is the README for your extension "usl". After writing up a brief description, we recommend including the following sections.
 
@@ -6,60 +6,124 @@ This is the README for your extension "usl". After writing up a brief descriptio
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
-For example if there is an image subfolder under your extension project workspace:
+# 🧊 Universal Shading Language
 
-\!\[feature X\]\(images/feature-x.png\)
+VS Code extension for **Universal Shading Language (USL)** - A modern cross-platform shader language.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](CHANGELOG.md)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-## Requirements
+## Features
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+✨ **Syntax Highlighting** - Full support for USL syntax  
+🎯 **IntelliSense** - Smart auto-completion for types, functions, and keywords  
+📖 **Documentation** - Hover over symbols for instant help  
+🔍 **Navigation** - Go to definition for structs, functions, and variables  
+🧊 **File Icons** - Custom ice cube icons for `.usl` and `.us` files  
 
-## Extension Settings
+### Supported Syntax
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+```usl
+// Shader functions
+vert, frag, kern, vertex, fragment, kernel, compute
 
-For example:
+// Types
+float, float2, float3, float4, int, uint, bool
+texture2d, sampler, buffer, atomic
 
-This extension contributes the following settings:
+// Keywords
+struct, fn, var, let, const, uniform, if, else, for, while, return
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+// Attributes
+#position, #color, #normal, #texcoord
+```
 
-## Known Issues
+## Quick Start
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. Install the extension
+2. Create a file with `.usl` or `.us` extension
+3. Start typing - IntelliSense will guide you!
 
-## Release Notes
+## Example Shader
 
-Users appreciate release notes as you update your extension.
+```usl
+// Struct definition
+struct Vertex {
+    position: float3 #position;
+    normal: float3 #normal;
+    texCoord: float2;
+}
 
-### 1.0.0
+struct VertexOut {
+    position: float4 #position;
+    color: float4;
+}
 
-Initial release of ...
+// Vertex shader
+vert vertexShader(in: Vertex, uniforms: Uniform(0)) -> VertexOut {
+    var out = VertexOut()
+    out.position = uniforms.projectionMatrix * float4(in.position, 1.0)
+    out.color = float4(1.0)
+    return out
+}
 
-### 1.0.1
+// Fragment shader
+frag fragmentShader(in: VertexOut as stage_in) -> float4 {
+    return in.color
+}
+```
 
-Fixed issue #.
+## IntelliSense Features
 
-### 1.1.0
+**Type `vert` + Tab** - Expands to full vertex shader template  
+**Type `frag` + Tab** - Expands to full fragment shader template  
+**Type function names** - See auto-completion with documentation  
+**Hover over symbols** - Get instant help and signatures  
 
-Added features X, Y, and Z.
+## More Examples
 
------------------------------------------------------------------------------------------------------------
+Check the `examples/` directory for:
+- Basic shaders
+- PBR lighting
+- Compute shaders
+- Comprehensive syntax showcase
 
-## Working with Markdown
+## Development
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+```bash
+# Clone and setup
+git clone <repo>
+cd usl
+npm install
+npm run compile
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
+# Test in VS Code
+# Press F5 to launch Extension Development Host
+```
 
-### For more information
+## File Structure
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+```
+usl/
+├── src/                 # TypeScript source
+├── syntaxes/            # TextMate grammar
+├── examples/            # Example shaders
+├── images/              # Icons
+└── fileicons/           # File icon theme
+```
 
-**Enjoy!**
+## Roadmap
+
+See [TODO.md](TODO.md) for planned features and known issues.
+
+## Contributing
+
+Contributions welcome! Open an issue or submit a PR.
+
+## License
+
+MIT
+
+---
+
+**Happy Shading! 🧊✨**

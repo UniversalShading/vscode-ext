@@ -1,0 +1,12 @@
+{
+  "iconDefinitions": {
+    "usl-file": {
+      "iconPath": "../images/usl_icon.png"
+    }
+  },
+  "fileExtensions": {
+    "usl": "usl-file",
+    "us": "usl-file"
+  },
+  "file": "usl-file"
+}

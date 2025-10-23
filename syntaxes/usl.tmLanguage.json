@@ -1,106 +1,415 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "usl",
+	"name": "Universal Shading Language",
 	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#struct-definition"
+		},
+		{
+			"include": "#attributes"
+		},
+		{
+			"include": "#shader-functions"
+		},
+		{
+			"include": "#function-definition"
+		},
 		{
 			"include": "#keywords"
 		},
 		{
+			"include": "#types"
+		},
+		{
+			"include": "#storage-modifiers"
+		},
+		{
+			"include": "#constants"
+		},
+		{
 			"include": "#strings"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#punctuation"
+		},
+		{
+			"include": "#function-call"
+		},
+		{
+			"include": "#member-access"
+		},
+		{
+			"include": "#variables"
 		}
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.usl",
-				"match": "\\b(if|while|for|return|vertex|fragment|kernel|struct|float2|float3|float4|attribute)\\b"
-			}]
-		},
-		"strings": {
-			"name": "string.quoted.double.usl",
-			"begin": "\"",
-			"end": "\"",
+		"comments": {
 			"patterns": [
 				{
-					"name": "constant.character.escape.usl",
-					"match": "\\\\."
+					"name": "comment.block.usl",
+					"begin": "/\\*",
+					"end": "\\*/",
+					"patterns": [
+						{
+							"include": "#comments"
+						}
+					]
+				},
+				{
+					"name": "comment.line.double-slash.usl",
+					"match": "//.*$"
+				}
+			]
+		},
+		"attributes": {
+			"patterns": [
+				{
+					"comment": "Attributes with @ or # prefix, like @attribute(0) or #position",
+					"name": "meta.attribute.usl",
+					"match": "[@#]\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(\\([^)]*\\))?",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.attribute.usl"
+						},
+						"2": {
+							"name": "meta.attribute.arguments.usl"
+						}
+					}
+				}
+			]
+		},
+		"shader-functions": {
+			"patterns": [
+				{
+					"name": "meta.function.shader.usl",
+					"match": "\\b(vert|frag|kern|vertex|fragment|kernel|compute)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.other.shader.usl"
+						},
+						"2": {
+							"name": "entity.name.function.shader.usl"
+						}
+					}
+				}
+			]
+		},
+		"function-definition": {
+			"patterns": [
+				{
+					"name": "meta.function.definition.usl",
+					"match": "\\b(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(<[^>]*>)?",
+					"captures": {
+						"1": {
+							"name": "keyword.other.fn.usl"
+						},
+						"2": {
+							"name": "entity.name.function.usl"
+						},
+						"3": {
+							"name": "meta.generic.usl"
+						}
+					}
+				}
+			]
+		},
+		"function-call": {
+			"patterns": [
+				{
+					"name": "meta.function.call.usl",
+					"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+					"captures": {
+						"1": {
+							"name": "entity.name.function.call.usl"
+						}
+					}
+				}
+			]
+		},
+		"member-access": {
+			"patterns": [
+				{
+					"name": "meta.member.access.usl",
+					"match": "(?<=\\.\\s*)([a-zA-Z_][a-zA-Z0-9_]*)",
+					"captures": {
+						"1": {
+							"name": "variable.other.member.usl"
+						}
+					}
+				}
+			]
+		},
+		"struct-definition": {
+			"patterns": [
+				{
+					"name": "meta.struct.usl",
+					"begin": "\\b(struct)\\s+([A-Z][a-zA-Z0-9_]*)\\s*\\{",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.other.struct.usl"
+						},
+						"2": {
+							"name": "entity.name.type.struct.usl"
+						}
+					},
+					"end": "\\}",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#attributes"
+						},
+						{
+							"comment": "Struct member: name: type",
+							"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*:\\s*([a-zA-Z_][a-zA-Z0-9_]*(?:x[0-9])?(?:<[^>]+>)?)",
+							"captures": {
+								"1": {
+									"name": "variable.other.property.usl"
+								},
+								"2": {
+									"name": "entity.name.type.usl"
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.usl",
+					"match": "\\b(if|else|while|for|return|break|continue|switch|case|default)\\b"
+				},
+				{
+					"name": "keyword.other.usl",
+					"match": "\\b(enum|union|typedef)\\b"
+				},
+				{
+					"name": "keyword.operator.new.usl",
+					"match": "\\b(as|in|out|inout)\\b"
+				}
+			]
+		},
+		"storage-modifiers": {
+			"patterns": [
+				{
+					"name": "storage.modifier.usl",
+					"match": "\\b(var|let|const|static|uniform|buffer|texture|sampler|stage_in|stage_out)\\b"
 				}
 			]
 		},
 		"types": {
-            "comment": "types",
-            "name": "storage.type.usl",
-            "patterns": [
-                {
-                    "comment": "scalar Types",
-                    "name": "storage.type.usl",
-                    "match": "\\b(bool|int32|uint32|int16|uint16|float32)\\b"
-                },
-                {
-                    "comment": "reserved scalar Types",
-                    "name": "storage.type.usl",
-                    "match": "\\b(int64|uint64|double)\\b"
-                },
-                {
-                    "comment": "vector/matrix types",
-                    "name": "storage.type.usl",
-                    "match": "\\b((float|int|uint|double|short)[2-4]|(float|int|uint|double|short)[2-4]x[2-4])\\b"
-                },
-                {
-                    "comment": "atomic types",
-                    "name": "storage.type.usl",
-                    "match": "\\b(atomic)\\b"
-                },
-                {
-                    "comment": "Custom type",
-                    "name": "entity.name.type.usl",
-                    "match": "\\b([A-Z][A-Za-z0-9]*)\\b"
-                }
-            ]
-        },
-		"variables": {
-            "patterns": [
-                {
-                    "comment": "variables",
-                    "name": "variable.other.usl",
-                    "match": "\\b(?<!(?<!\\.)\\.)(?:r#(?!(crate|[Ss]elf|super)))?[a-z0-9_]+\\b"
-                }
-            ]
-        },
+			"patterns": [
+				{
+					"comment": "Rust-style scalar types",
+					"name": "storage.type.scalar.usl",
+					"match": "\\b(f32|f64|i8|i16|i32|i64|u8|u16|u32|u64|f16)\\b"
+				},
+				{
+					"comment": "C-style scalar types",
+					"name": "storage.type.scalar.usl",
+					"match": "\\b(bool|int|uint|float|half|double|short|long|int8|int16|int32|int64|uint8|uint16|uint32|uint64|float16|float32|float64)\\b"
+				},
+				{
+					"comment": "GLSL vector types (vec2, vec3, vec4, ivec2, uvec3, dvec4, bvec2, etc.)",
+					"name": "storage.type.vector.usl",
+					"match": "\\b([iudb]?vec[234]|[iudb]?vec[234]x[234])\\b"
+				},
+				{
+					"comment": "Metal/HLSL vector types (float2, int3, uint4, half2, etc.)",
+					"name": "storage.type.vector.usl",
+					"match": "\\b(bool|int|uint|float|half|double|short)(2|3|4)\\b"
+				},
+				{
+					"comment": "GLSL matrix types (mat2, mat3, mat4, mat2x3, dmat4x4, etc.)",
+					"name": "storage.type.matrix.usl",
+					"match": "\\b([fd]?mat[234](?:x[234])?)\\b"
+				},
+				{
+					"comment": "Metal/HLSL matrix types (float2x2, float4x4, half3x3, etc.)",
+					"name": "storage.type.matrix.usl",
+					"match": "\\b(float|half|double)(2x2|2x3|2x4|3x2|3x3|3x4|4x2|4x3|4x4)\\b"
+				},
+				{
+					"comment": "Texture types",
+					"name": "storage.type.texture.usl",
+					"match": "\\b(texture1d|texture2d|texture3d|textureCube|texture2dArray|depth2d|depth2dArray|sampler2D|sampler3D|samplerCube)\\b"
+				},
+				{
+					"comment": "Sampler types",
+					"name": "storage.type.sampler.usl",
+					"match": "\\b(sampler|sampler_state)\\b"
+				},
+				{
+					"comment": "Buffer types",
+					"name": "storage.type.buffer.usl",
+					"match": "\\b(buffer|atomic)\\b"
+				},
+				{
+					"comment": "Other types",
+					"name": "storage.type.other.usl",
+					"match": "\\b(void)\\b"
+				},
+				{
+					"comment": "Custom types (capitalized)",
+					"name": "entity.name.type.usl",
+					"match": "\\b([A-Z][A-Za-z0-9_]*)\\b"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.usl",
+					"match": "\\b(true|false)\\b"
+				},
+				{
+					"name": "constant.language.null.usl",
+					"match": "\\b(null|nil)\\b"
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.usl",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"name": "constant.character.escape.usl",
+							"match": "\\\\(x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8}|[0-7]{1,3}|[\\\\\"'nrtbfav])"
+						}
+					]
+				},
+				{
+					"name": "string.quoted.single.usl",
+					"begin": "'",
+					"end": "'",
+					"patterns": [
+						{
+							"name": "constant.character.escape.usl",
+							"match": "\\\\."
+						}
+					]
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.hex.usl",
+					"match": "\\b0[xX][0-9a-fA-F]+([uU]|[lL]|[uU][lL]|[lL][uU])?\\b"
+				},
+				{
+					"name": "constant.numeric.octal.usl",
+					"match": "\\b0[oO][0-7]+([uU]|[lL]|[uU][lL]|[lL][uU])?\\b"
+				},
+				{
+					"name": "constant.numeric.binary.usl",
+					"match": "\\b0[bB][01]+([uU]|[lL]|[uU][lL]|[lL][uU])?\\b"
+				},
+				{
+					"name": "constant.numeric.float.usl",
+					"match": "\\b[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?[fFhH]?\\b"
+				},
+				{
+					"name": "constant.numeric.float.usl",
+					"match": "\\b[0-9]+[eE][+-]?[0-9]+[fFhH]?\\b"
+				},
+				{
+					"name": "constant.numeric.float.usl",
+					"match": "\\b[0-9]+[fFhH]\\b"
+				},
+				{
+					"name": "constant.numeric.integer.usl",
+					"match": "\\b[0-9]+([uU]|[lL]|[uU][lL]|[lL][uU])?\\b"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.arithmetic.usl",
+					"match": "\\+|\\-|\\*|\\/|%"
+				},
+				{
+					"name": "keyword.operator.comparison.usl",
+					"match": "==|!=|<=|>=|<|>"
+				},
+				{
+					"name": "keyword.operator.logical.usl",
+					"match": "&&|\\|\\||!"
+				},
+				{
+					"name": "keyword.operator.bitwise.usl",
+					"match": "&|\\||\\^|~|<<|>>"
+				},
+				{
+					"name": "keyword.operator.assignment.usl",
+					"match": "=|\\+=|\\-=|\\*=|\\/=|%=|&=|\\|=|\\^=|<<=|>>="
+				},
+				{
+					"name": "keyword.operator.arrow.usl",
+					"match": "->"
+				},
+				{
+					"name": "keyword.operator.access.usl",
+					"match": "\\."
+				}
+			]
+		},
 		"punctuation": {
-            "patterns": [
-                {
-                    "comment": "comma",
-                    "name": "punctuation.comma.usl",
-                    "match": ","
-                },
-                {
-                    "comment": "curly braces",
-                    "name": "punctuation.brackets.curly.usl",
-                    "match": "[{}]"
-                },
-                {
-                    "comment": "parentheses, round brackets",
-                    "name": "punctuation.brackets.round.usl",
-                    "match": "[()]"
-                },
-                {
-                    "comment": "semicolon",
-                    "name": "punctuation.semi.usl",
-                    "match": ";"
-                },
-                {
-                    "comment": "square brackets",
-                    "name": "punctuation.brackets.square.usl",
-                    "match": "[\\[\\]]"
-                },
-                {
-                    "comment": "angle brackets",
-                    "name": "punctuation.brackets.angle.usl",
-                    "match": "(?<!=)[<>]"
-                }
-            ]
-        }
+			"patterns": [
+				{
+					"name": "punctuation.comma.usl",
+					"match": ","
+				},
+				{
+					"name": "punctuation.terminator.statement.usl",
+					"match": ";"
+				},
+				{
+					"name": "punctuation.separator.colon.usl",
+					"match": ":"
+				},
+				{
+					"name": "punctuation.brackets.curly.usl",
+					"match": "[{}]"
+				},
+				{
+					"name": "punctuation.brackets.round.usl",
+					"match": "[()]"
+				},
+				{
+					"name": "punctuation.brackets.square.usl",
+					"match": "[\\[\\]]"
+				},
+				{
+					"name": "punctuation.brackets.angle.usl",
+					"match": "[<>]"
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "variable.other.usl",
+					"match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+				}
+			]
+		}
 	},
 	"scopeName": "source.usl"
 }

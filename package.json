@@ -1,25 +1,70 @@
 {
     "name": "usl",
     "displayName": "Universal Shading Language",
-    "description": "Universal Shading Language ",
-    "version": "0.0.1",
+    "description": "Syntax highlighting and IntelliSense for Universal Shading Language",
+    "version": "0.1.0",
+    "publisher": "usl",
+    "icon": "images/icon.png",
     "engines": {
-        "vscode": "^1.64.0"
+        "vscode": "^1.74.0"
     },
     "categories": [
         "Programming Languages"
     ],
+    "keywords": [
+        "usl",
+        "universal shading",
+        "shader",
+        "graphics",
+        "gpu"
+    ],
+    "main": "./out/extension.js",
+    "activationEvents": [
+        "onLanguage:usl"
+    ],
     "contributes": {
         "languages": [{
             "id": "usl",
-            "aliases": ["Universal Shading", "Universal Shading Language", "us", "usl"],
-            "extensions": ["usl","us"],
-            "configuration": "./language-configuration.json"
+            "aliases": ["Universal Shading Language", "usl", "us"],
+            "extensions": [".usl", ".us"],
+            "configuration": "./language-configuration.json",
+            "icon": {
+                "light": "./images/icon.png",
+                "dark": "./images/icon.png"
+            }
         }],
         "grammars": [{
             "language": "usl",
             "scopeName": "source.usl",
             "path": "./syntaxes/usl.tmLanguage.json"
-        }]
+        }],
+        "iconThemes": [
+            {
+                "id": "usl-icons",
+                "label": "USL File Icons",
+                "path": "./fileicons/usl-icon-theme.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.74.0",
+        "@types/glob": "^8.0.0",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "16.x",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
+        "eslint": "^8.28.0",
+        "glob": "^8.0.3",
+        "mocha": "^10.1.0",
+        "typescript": "^4.9.3",
+        "@vscode/test-electron": "^2.2.0"
     }
 }

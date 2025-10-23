@@ -1,0 +1,57 @@
+// Universal Shading Language Example
+// Basic Vertex and Fragment Shader
+
+struct Vertex {
+    position: float3 #position;
+    normal: float3 #normal;
+    texCoord: float2;
+}
+
+struct ColorInOut {
+    position: float4 #position;
+    color: float4;
+    texCoord: float2;
+}
+
+struct Uniforms {
+    modelViewMatrix: float4x4;
+    projectionMatrix: float4x4;
+    normalMatrix: float3x3;
+    lightDirection: float3;
+    lightColor: float3;
+}
+
+// Vertex Shader
+vert vertexShader(in: Vertex, uniforms: Uniform(0)) -> ColorInOut {
+    var out = ColorInOut()
+    
+    // Transform position
+    let worldPos = float4(in.position, 1.0)
+    out.position = uniforms.projectionMatrix * uniforms.modelViewMatrix * worldPos
+    
+    // Calculate lighting
+    let normal = normalize(uniforms.normalMatrix * in.normal)
+    let lightIntensity = max(dot(normal, uniforms.lightDirection), 0.0)
+    out.color = float4(uniforms.lightColor * lightIntensity, 1.0)
+    
+    // Pass through texture coordinates
+    out.texCoord = in.texCoord
+    
+    return out
+}
+
+// Fragment Shader
+frag fragmentShader(in: ColorInOut as stage_in,
+                   colorMap: texture2d<half>(0)) -> float4 {
+    
+    // Create sampler
+    let colorSampler = sampler(.linear, .linear, .repeat)
+    
+    // Sample texture
+    let texColor = colorMap.sample(colorSampler, in.texCoord)
+    
+    // Combine lighting and texture
+    let finalColor = float4(texColor.rgb, 1.0) * in.color
+    
+    return finalColor
+}
