@@ -2,9 +2,13 @@
     "name": "usl",
     "displayName": "Universal Shading Language",
     "description": "Syntax highlighting and IntelliSense for Universal Shading Language",
-    "version": "0.1.0",
-    "publisher": "usl",
+        "version": "0.1.0",
+    "publisher": "UniversalShading",
     "icon": "images/icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/UniversalShading"
+    },
     "engines": {
         "vscode": "^1.74.0"
     },
