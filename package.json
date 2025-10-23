@@ -65,7 +65,7 @@
                         {
                             "scope": "keyword.operator.arrow.usl",
                             "settings": {
-                                "foreground": "#a678ce"
+                                "foreground": "#C16655"
                             }
                         }
                     ]
