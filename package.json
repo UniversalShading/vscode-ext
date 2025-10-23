@@ -1,0 +1,25 @@
+{
+    "name": "usl",
+    "displayName": "Universal Shading Language",
+    "description": "Universal Shading Language ",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.64.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "usl",
+            "aliases": ["Universal Shading", "Universal Shading Language", "us", "usl"],
+            "extensions": ["usl","us"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "usl",
+            "scopeName": "source.usl",
+            "path": "./syntaxes/usl.tmLanguage.json"
+        }]
+    }
+}

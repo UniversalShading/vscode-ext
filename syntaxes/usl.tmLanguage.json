@@ -1,0 +1,106 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "usl",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.usl",
+				"match": "\\b(if|while|for|return|vertex|fragment|kernel|struct|float2|float3|float4|attribute)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.usl",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.usl",
+					"match": "\\\\."
+				}
+			]
+		},
+		"types": {
+            "comment": "types",
+            "name": "storage.type.usl",
+            "patterns": [
+                {
+                    "comment": "scalar Types",
+                    "name": "storage.type.usl",
+                    "match": "\\b(bool|int32|uint32|int16|uint16|float32)\\b"
+                },
+                {
+                    "comment": "reserved scalar Types",
+                    "name": "storage.type.usl",
+                    "match": "\\b(int64|uint64|double)\\b"
+                },
+                {
+                    "comment": "vector/matrix types",
+                    "name": "storage.type.usl",
+                    "match": "\\b((float|int|uint|double|short)[2-4]|(float|int|uint|double|short)[2-4]x[2-4])\\b"
+                },
+                {
+                    "comment": "atomic types",
+                    "name": "storage.type.usl",
+                    "match": "\\b(atomic)\\b"
+                },
+                {
+                    "comment": "Custom type",
+                    "name": "entity.name.type.usl",
+                    "match": "\\b([A-Z][A-Za-z0-9]*)\\b"
+                }
+            ]
+        },
+		"variables": {
+            "patterns": [
+                {
+                    "comment": "variables",
+                    "name": "variable.other.usl",
+                    "match": "\\b(?<!(?<!\\.)\\.)(?:r#(?!(crate|[Ss]elf|super)))?[a-z0-9_]+\\b"
+                }
+            ]
+        },
+		"punctuation": {
+            "patterns": [
+                {
+                    "comment": "comma",
+                    "name": "punctuation.comma.usl",
+                    "match": ","
+                },
+                {
+                    "comment": "curly braces",
+                    "name": "punctuation.brackets.curly.usl",
+                    "match": "[{}]"
+                },
+                {
+                    "comment": "parentheses, round brackets",
+                    "name": "punctuation.brackets.round.usl",
+                    "match": "[()]"
+                },
+                {
+                    "comment": "semicolon",
+                    "name": "punctuation.semi.usl",
+                    "match": ";"
+                },
+                {
+                    "comment": "square brackets",
+                    "name": "punctuation.brackets.square.usl",
+                    "match": "[\\[\\]]"
+                },
+                {
+                    "comment": "angle brackets",
+                    "name": "punctuation.brackets.angle.usl",
+                    "match": "(?<!=)[<>]"
+                }
+            ]
+        }
+	},
+	"scopeName": "source.usl"
+}
