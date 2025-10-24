@@ -1,22 +1,12 @@
-// ==============================================================================
-// Universal Shading Language - Comprehensive Syntax Test
-// ==============================================================================
-// This file demonstrates all features of USL syntax highlighting and IntelliSense
+struct Vertex {
+  position: float3 #attribute(0)
+  texCoord: float2 #attribute(1)
+}
 
-// ==============================================================================
-// 1. COMMENTS
-// ==============================================================================
-
-// Single-line comment
-/* Block comment */
-/* 
-   Multi-line
-   block comment
-*/
-
-// ==============================================================================
-// 2. STRUCT DEFINITIONS
-// ==============================================================================
+struct ColorInOut {
+  position: vec4 #position
+  texCoord: float2
+}
 
 struct Vertex {
     position: float3 #position;
@@ -56,7 +46,7 @@ struct Light {
 // ==============================================================================
 
 // Standard function
-fn calculateDiffuse(normal: float3, lightDir: float3) -> float {
+fn calculateDiffuse(normal: float3 #stage_in, lightDir: float3) -> float {
     return max(dot(normal, lightDir), 0.0)
 }
 

@@ -77,6 +77,12 @@
                             "settings": {
                                 "foreground": "#C586C0"
                             }
+                        },
+                        {
+                            "scope": "variable.parameter.attribute.usl",
+                            "settings": {
+                                "foreground": "#4EC9B0"
+                            }
                         }
                     ]
                 }

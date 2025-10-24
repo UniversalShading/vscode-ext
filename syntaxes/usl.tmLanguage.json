@@ -73,10 +73,11 @@
 		"attributes": {
 			"patterns": [
 				{
-					"comment": "Attributes with @ or # prefix, like @attribute(0) or #position",
+					"comment": "Attributes with @ or # prefix and optional arguments",
 					"name": "meta.attribute.usl",
-					"match": "([@#])([a-zA-Z_][a-zA-Z0-9_]*)\\s*(\\([^)]*\\))?",
-					"captures": {
+					"begin": "([@#])([a-zA-Z_][a-zA-Z0-9_]*)\\s*(\\()?",
+					"end": "(\\))|(?=$|;|,|\\})",
+					"beginCaptures": {
 						"1": {
 							"name": "punctuation.definition.attribute.usl"
 						},
@@ -84,9 +85,50 @@
 							"name": "entity.name.function.decorator.usl"
 						},
 						"3": {
-							"name": "meta.attribute.arguments.usl"
+							"name": "punctuation.section.parens.begin.usl"
 						}
-					}
+					},
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.section.parens.end.usl"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#attribute-arguments"
+						}
+					]
+				}
+			]
+		},
+		"attribute-arguments": {
+			"patterns": [
+				{
+					"name": "constant.numeric.usl",
+					"match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
+				},
+				{
+					"name": "string.quoted.double.usl",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"name": "constant.character.escape.usl",
+							"match": "\\\\."
+						}
+					]
+				},
+				{
+					"name": "constant.language.boolean.usl",
+					"match": "\\b(true|false)\\b"
+				},
+				{
+					"name": "variable.parameter.attribute.usl",
+					"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+				},
+				{
+					"name": "punctuation.separator.comma.usl",
+					"match": ","
 				}
 			]
 		},
