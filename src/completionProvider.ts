@@ -54,12 +54,12 @@ export class USLCompletionItemProvider implements vscode.CompletionItemProvider 
             {
                 name: 'vert',
                 detail: 'Vertex shader function',
-                snippet: 'vert ${1:vertexShader}(in: ${2:Vertex}) -> ${3:VertexOut} {\n\t$0\n}'
+                snippet: 'vert ${1:vertexShader}(input: ${2:Vertex} #stage_in, uniforms: ${3:Uniforms} #buffer(0)) -> ${4:VertexOut} {\n\tlet out: ${4:VertexOut};\n\tout.position = uniforms.modelViewProjection * float4(input.position, 1.0);\n\tout.texCoord = input.texCoord;\n\treturn out;\n}'
             },
             {
                 name: 'frag',
                 detail: 'Fragment shader function',
-                snippet: 'frag ${1:fragmentShader}(in: ${2:FragmentIn}) -> ${3:float4} {\n\t$0\n}'
+                snippet: 'frag ${1:fragmentShader}(input: ${2:VertexOut}) -> float4 {\n\treturn float4(input.texCoord, 0.0, 1.0);\n}'
             },
             {
                 name: 'kern',
@@ -68,18 +68,8 @@ export class USLCompletionItemProvider implements vscode.CompletionItemProvider 
             },
             {
                 name: 'vertex',
-                detail: 'Vertex shader function (alternative)',
-                snippet: 'vertex ${1:vertexShader}(in: ${2:Vertex}) -> ${3:VertexOut} {\n\t$0\n}'
-            },
-            {
-                name: 'fragment',
-                detail: 'Fragment shader function (alternative)',
-                snippet: 'fragment ${1:fragmentShader}(in: ${2:FragmentIn}) -> ${3:float4} {\n\t$0\n}'
-            },
-            {
-                name: 'kernel',
-                detail: 'Compute kernel function (alternative)',
-                snippet: 'kernel ${1:computeShader}() -> ${2:void} {\n\t$0\n}'
+                detail: 'Vertex struct definition',
+                snippet: 'vertex ${1:Vertex} {\n\tposition: float3\n\ttexCoord: float2\n\tnormal:   float3\n\t$0\n}'
             },
             {
                 name: 'compute',
