@@ -252,18 +252,55 @@ export class USLCompletionItemProvider implements vscode.CompletionItemProvider 
 
     private getAttributes(): vscode.CompletionItem[] {
         const attributes = [
+            // Vertex attributes with #
             { name: '#position', desc: 'Vertex position attribute' },
             { name: '#color', desc: 'Vertex color attribute' },
             { name: '#normal', desc: 'Vertex normal attribute' },
             { name: '#texcoord', desc: 'Texture coordinate attribute' },
             { name: '#tangent', desc: 'Vertex tangent attribute' },
-            { name: '#binormal', desc: 'Vertex binormal attribute' }
+            { name: '#binormal', desc: 'Vertex binormal attribute' },
+            
+            // Metal-like stage qualifiers with @
+            { name: '@stage_in', desc: 'Stage input qualifier (from previous stage)' },
+            { name: '@stage_out', desc: 'Stage output qualifier (to next stage)' },
+            
+            // Buffer and resource qualifiers with @
+            { name: '@buffer', desc: 'Buffer binding qualifier' },
+            { name: '@texture', desc: 'Texture binding qualifier' },
+            { name: '@sampler', desc: 'Sampler binding qualifier' },
+            { name: '@uniform', desc: 'Uniform buffer qualifier' },
+            
+            // Function attributes with @
+            { name: '@vertex', desc: 'Vertex shader entry point' },
+            { name: '@fragment', desc: 'Fragment shader entry point' },
+            { name: '@kernel', desc: 'Compute kernel entry point' },
+            
+            // Location/binding attributes with #
+            { name: '#attribute', desc: 'Vertex attribute with index: #attribute(index)' },
+            { name: '#location', desc: 'Location qualifier: #location(index)' },
+            { name: '#binding', desc: 'Binding point qualifier: #binding(index)' },
+            
+            // Interpolation qualifiers with @
+            { name: '@flat', desc: 'Flat interpolation (no interpolation)' },
+            { name: '@smooth', desc: 'Smooth/perspective-correct interpolation' },
+            { name: '@noperspective', desc: 'Linear interpolation without perspective correction' },
+            
+            // Built-in variables with #
+            { name: '#vertex_id', desc: 'Built-in vertex ID' },
+            { name: '#instance_id', desc: 'Built-in instance ID' },
+            { name: '#fragment_coord', desc: 'Built-in fragment coordinate' },
+            { name: '#front_facing', desc: 'Built-in front-facing indicator' },
+            { name: '#point_size', desc: 'Built-in point size output' }
         ];
 
         return attributes.map(attr => {
             const item = new vscode.CompletionItem(attr.name, vscode.CompletionItemKind.Property);
-            item.detail = 'Vertex Attribute';
+            item.detail = 'Attribute';
             item.documentation = new vscode.MarkdownString(attr.desc);
+            // For attributes with arguments, add snippet
+            if (attr.name.includes('attribute') || attr.name.includes('location') || attr.name.includes('binding')) {
+                item.insertText = new vscode.SnippetString(`${attr.name}($1)`);
+            }
             return item;
         });
     }

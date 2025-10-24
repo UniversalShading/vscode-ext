@@ -1,6 +1,6 @@
 {
     "name": "usl",
-    "displayName": "Universal Shading Language",
+    "displayName": "Universal Shading Language (USL)",
     "description": "Syntax highlighting and IntelliSense for Universal Shading Language",
         "version": "0.1.0",
     "publisher": "UniversalShading",
