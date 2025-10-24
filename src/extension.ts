@@ -14,7 +14,9 @@ export function activate(context: vscode.ExtensionContext) {
         new USLCompletionItemProvider(),
         '.', // Trigger on dot for member access
         '<', // Trigger on angle bracket for generics
-        '(' // Trigger on parenthesis for function parameters
+        '(', // Trigger on parenthesis for function parameters
+        '#', // Trigger on hash for attributes
+        '@'  // Trigger on at-sign for attributes
     );
 
     // Register hover provider

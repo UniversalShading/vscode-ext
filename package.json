@@ -71,6 +71,12 @@
                             "settings": {
                                 "foreground": "#C16655"
                             }
+                        },
+                        {
+                            "scope": "punctuation.definition.attribute.usl",
+                            "settings": {
+                                "foreground": "#C586C0"
+                            }
                         }
                     ]
                 }

@@ -75,12 +75,15 @@
 				{
 					"comment": "Attributes with @ or # prefix, like @attribute(0) or #position",
 					"name": "meta.attribute.usl",
-					"match": "[@#]\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(\\([^)]*\\))?",
+					"match": "([@#])\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(\\([^)]*\\))?",
 					"captures": {
 						"1": {
-							"name": "entity.name.function.decorator.usl"
+							"name": "punctuation.definition.attribute.usl"
 						},
 						"2": {
+							"name": "entity.name.function.decorator.usl"
+						},
+						"3": {
 							"name": "meta.attribute.arguments.usl"
 						}
 					}

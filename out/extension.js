@@ -34,7 +34,9 @@ function activate(context) {
     // Register completion provider
     const completionProvider = vscode.languages.registerCompletionItemProvider(selector, new completionProvider_1.USLCompletionItemProvider(), '.', // Trigger on dot for member access
     '<', // Trigger on angle bracket for generics
-    '(' // Trigger on parenthesis for function parameters
+    '(', // Trigger on parenthesis for function parameters
+    '#', // Trigger on hash for attributes
+    '@' // Trigger on at-sign for attributes
     );
     // Register hover provider
     const hoverProvider = vscode.languages.registerHoverProvider(selector, new hoverProvider_1.USLHoverProvider());
