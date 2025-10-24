@@ -4,6 +4,8 @@ VS Code extension for Universal Shading Language with comprehensive syntax highl
 
 The compiler still is in WIP, for more information see https://github.com/UniversalShading
 
+![Syntax Highlighting Example](images/usl_sample.png)
+
 ## Features
 
 - **Syntax Highlighting**
