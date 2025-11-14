@@ -186,6 +186,18 @@
 		"parameter-qualifier": {
 			"patterns": [
 				{
+					"comment": "Parameter qualifier with & shorthand for inout",
+					"match": "(&)\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*:",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.parameter.usl"
+						},
+						"2": {
+							"name": "variable.parameter.usl"
+						}
+					}
+				},
+				{
 					"comment": "Parameter qualifiers: inout/in/out before parameter name",
 					"match": "\\b(in|out|inout)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*:",
 					"captures": {

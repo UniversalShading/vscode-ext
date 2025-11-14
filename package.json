@@ -88,13 +88,14 @@
                             "scope": "storage.modifier.parameter.usl",
                             "settings": {
                                 "foreground": "#CE9178",
-                                "fontStyle": "italic"
+                                "fontStyle": "italic bold"
                             }
                         },
                         {
                             "scope": "variable.parameter.usl",
                             "settings": {
-                                "foreground": "#686868"
+                                "foreground": "#2F4081",
+                                "fontStyle": "underline"
                             }
                         }
                     ]
