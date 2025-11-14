@@ -48,7 +48,7 @@ class USLCompletionItemProvider {
     }
     getKeywords() {
         const keywords = [
-            'if', 'else', 'while', 'for', 'return', 'break', 'continue',
+            'if', 'else', 'while', 'for', 'return', 'break', 'continue', 'fallthrough',
             'struct', 'fn', 'as', 'in', 'out', 'inout', 'switch', 'case', 'default'
         ];
         return keywords.map(keyword => {

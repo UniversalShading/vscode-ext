@@ -234,7 +234,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.usl",
-					"match": "\\b(if|else|while|for|return|break|continue|switch|case|default)\\b"
+					"match": "\\b(if|else|while|for|return|break|continue|fallthrough|switch|case|default)\\b"
 				},
 				{
 					"name": "keyword.other.usl",

@@ -38,7 +38,7 @@ export class USLCompletionItemProvider implements vscode.CompletionItemProvider 
 
     private getKeywords(): vscode.CompletionItem[] {
         const keywords = [
-            'if', 'else', 'while', 'for', 'return', 'break', 'continue',
+            'if', 'else', 'while', 'for', 'return', 'break', 'continue', 'fallthrough',
             'struct', 'fn', 'as', 'in', 'out', 'inout', 'switch', 'case', 'default'
         ];
 
