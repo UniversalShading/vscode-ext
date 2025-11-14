@@ -13,6 +13,6 @@ fn vertexShader(input: Vertex #stage_in, uniforms: Uniforms #buffer) -> float4 {
   return input.position
 }
 
-fn fragmentShader(input: float4 #position) -> float4 {
+fn fragmentShader(inoutinput: float4 #position) -> float4 {
   return input
 }

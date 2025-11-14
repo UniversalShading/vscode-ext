@@ -83,6 +83,19 @@
                             "settings": {
                                 "foreground": "#4EC9B0"
                             }
+                        },
+                        {
+                            "scope": "storage.modifier.parameter.usl",
+                            "settings": {
+                                "foreground": "#CE9178",
+                                "fontStyle": "italic"
+                            }
+                        },
+                        {
+                            "scope": "variable.parameter.usl",
+                            "settings": {
+                                "foreground": "#686868"
+                            }
                         }
                     ]
                 }

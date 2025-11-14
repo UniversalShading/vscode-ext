@@ -18,6 +18,9 @@
 			"include": "#function-definition"
 		},
 		{
+			"include": "#parameter-qualifier"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
@@ -180,6 +183,22 @@
 				}
 			]
 		},
+		"parameter-qualifier": {
+			"patterns": [
+				{
+					"comment": "Parameter qualifiers: inout/in/out before parameter name",
+					"match": "\\b(in|out|inout)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*:",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.parameter.usl"
+						},
+						"2": {
+							"name": "variable.parameter.usl"
+						}
+					}
+				}
+			]
+		},
 		"member-access": {
 			"patterns": [
 				{
@@ -241,8 +260,8 @@
 					"match": "\\b(enum|union|typedef)\\b"
 				},
 				{
-					"name": "keyword.operator.new.usl",
-					"match": "\\b(as|in|out|inout)\\b"
+					"name": "keyword.operator.cast.usl",
+					"match": "\\b(as)\\b"
 				}
 			]
 		},
