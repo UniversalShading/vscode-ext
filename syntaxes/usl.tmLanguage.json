@@ -79,7 +79,7 @@
 					"comment": "Attributes with @ or # prefix and optional arguments",
 					"name": "meta.attribute.usl",
 					"begin": "([@#])([a-zA-Z_][a-zA-Z0-9_]*)\\s*(\\()?",
-					"end": "(\\))|(?=$|;|,|\\})",
+					"end": "(\\))|(?=\\s*(?:(fn|struct|vert|frag|kern|vertex|fragment|kernel|compute)\\b)|$|;|,|\\})",
 					"beginCaptures": {
 						"1": {
 							"name": "punctuation.definition.attribute.usl"
