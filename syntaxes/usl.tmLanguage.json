@@ -139,12 +139,15 @@
 			"patterns": [
 				{
 					"name": "meta.function.shader.usl",
-					"match": "\\b(vert|frag|kern|vertex|fragment|kernel|compute)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+					"match": "\\b(pub\\s+)?(vert|frag|kern|vertex|fragment|kernel|compute)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
 					"captures": {
 						"1": {
-							"name": "keyword.other.shader.usl"
+							"name": "keyword.other.pub.usl"
 						},
 						"2": {
+							"name": "keyword.other.shader.usl"
+						},
+						"3": {
 							"name": "entity.name.function.shader.usl"
 						}
 					}
@@ -155,15 +158,18 @@
 			"patterns": [
 				{
 					"name": "meta.function.definition.usl",
-					"match": "\\b(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(<[^>]*>)?",
+					"match": "\\b(pub\\s+)?(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(<[^>]*>)?",
 					"captures": {
 						"1": {
-							"name": "keyword.other.fn.usl"
+							"name": "keyword.other.pub.usl"
 						},
 						"2": {
-							"name": "entity.name.function.usl"
+							"name": "keyword.other.fn.usl"
 						},
 						"3": {
+							"name": "entity.name.function.usl"
+						},
+						"4": {
 							"name": "meta.generic.usl"
 						}
 					}
@@ -228,12 +234,15 @@
 			"patterns": [
 				{
 					"name": "meta.struct.usl",
-					"begin": "\\b(struct)\\s+([A-Z][a-zA-Z0-9_]*)\\s*\\{",
+					"begin": "\\b(pub\\s+)?(struct)\\s+([A-Z][a-zA-Z0-9_]*)\\s*\\{",
 					"beginCaptures": {
 						"1": {
-							"name": "keyword.other.struct.usl"
+							"name": "keyword.other.pub.usl"
 						},
 						"2": {
+							"name": "keyword.other.struct.usl"
+						},
+						"3": {
 							"name": "entity.name.type.struct.usl"
 						}
 					},
