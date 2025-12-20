@@ -9,10 +9,16 @@
 			"include": "#struct-definition"
 		},
 		{
+			"include": "#vertex-struct-definition"
+		},
+		{
 			"include": "#attributes"
 		},
 		{
 			"include": "#shader-functions"
+		},
+		{
+			"include": "#shader-blocks"
 		},
 		{
 			"include": "#function-definition"
@@ -154,6 +160,51 @@
 				}
 			]
 		},
+		"shader-blocks": {
+			"patterns": [
+				{
+					"name": "meta.function.shader.block.usl",
+					"begin": "\\b(pub\\s+)?(vert|frag|kern|vertex|fragment|kernel|compute)(?:\\s+([A-Z][a-zA-Z0-9_]*))?\\s*\\{",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.other.pub.usl"
+						},
+						"2": {
+							"name": "keyword.other.shader.usl"
+						},
+						"3": {
+							"name": "entity.name.type.struct.usl"
+						}
+					},
+					"end": "\\}",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#attributes"
+						},
+						{
+							"comment": "Struct/vertex member line: capture names then allow nested type/number highlighting",
+							"begin": "\\b([a-zA-Z_][a-zA-Z0-9_]*(?:\\s*,\\s*[a-zA-Z_][a-zA-Z0-9_]*)*)\\s*(?::|=)?\\s*",
+							"beginCaptures": {
+								"1": { "name": "variable.other.member.usl" }
+							},
+							"end": "(?=$)",
+							"patterns": [
+								{ "include": "#types" },
+								{ "include": "#numbers" },
+								{ "include": "#attributes" },
+								{
+									"name": "punctuation.separator.comma.usl",
+									"match": ","
+								}
+							]
+						}
+					]
+				}
+			]
+		},
 		"function-definition": {
 			"patterns": [
 				{
@@ -254,18 +305,68 @@
 						{
 							"include": "#attributes"
 						},
-						{
-							"comment": "Struct member: name: type",
-							"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*:\\s*([a-zA-Z_][a-zA-Z0-9_]*[0-9]*(?:x[0-9]+)?(?:<[^>]+>)?)",
-							"captures": {
-								"1": {
-									"name": "variable.other.member.usl"
+							{
+								"comment": "Struct/vertex member line: capture names then allow nested type/number highlighting",
+								"begin": "\\b([a-zA-Z_][a-zA-Z0-9_]*(?:\\s*,\\s*[a-zA-Z_][a-zA-Z0-9_]*)*)\\s*(?::|=)?\\s*",
+								"beginCaptures": {
+									"1": { "name": "variable.other.member.usl" }
 								},
-								"2": {
-									"name": "entity.name.type.usl"
-								}
+								"end": "(?=$)",
+								"patterns": [
+									{ "include": "#types" },
+									{ "include": "#numbers" },
+									{ "include": "#attributes" },
+									{
+										"name": "punctuation.separator.comma.usl",
+										"match": ","
+									}
+								]
 							}
+					]
+				}
+			]
+		},
+		"vertex-struct-definition": {
+			"patterns": [
+				{
+					"name": "meta.struct.usl",
+					"begin": "\\b(pub\\s+)?(vert|frag|kern|vertex|fragment|kernel|compute)\\s+([A-Z][a-zA-Z0-9_]*)\\s*\\{",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.other.pub.usl"
+						},
+						"2": {
+							"name": "keyword.other.struct.usl"
+						},
+						"3": {
+							"name": "entity.name.type.struct.usl"
 						}
+					},
+					"end": "\\}",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#attributes"
+						},
+							{
+								"comment": "Struct/vertex member line: capture names then allow nested type/number highlighting",
+								"begin": "\\b([a-zA-Z_][a-zA-Z0-9_]*(?:\\s*,\\s*[a-zA-Z_][a-zA-Z0-9_]*)*)\\s*(?::|=)?\\s*",
+								"beginCaptures": {
+									"1": { "name": "variable.other.member.usl" }
+								},
+								"end": "(?=$)",
+								"patterns": [
+									{ "include": "#types" },
+									{ "include": "#numbers" },
+									{ "include": "#attributes" },
+									{
+										"name": "punctuation.separator.comma.usl",
+										"match": ","
+									}
+								]
+							}
 					]
 				}
 			]

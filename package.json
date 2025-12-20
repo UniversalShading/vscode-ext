@@ -2,7 +2,7 @@
     "name": "usl",
     "displayName": "Universal Shading Language (USL)",
     "description": "Syntax highlighting and IntelliSense for Universal Shading Language",
-    "version": "0.1.6",
+    "version": "0.1.8",
     "publisher": "UniversalShading",
     "icon": "images/icon.png",
     "repository": {
