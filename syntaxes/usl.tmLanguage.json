@@ -192,6 +192,7 @@
 							},
 							"end": "(?=$)",
 							"patterns": [
+								{ "include": "#comments" },
 								{ "include": "#types" },
 								{ "include": "#numbers" },
 								{ "include": "#attributes" },
@@ -313,6 +314,7 @@
 								},
 								"end": "(?=$)",
 								"patterns": [
+									{ "include": "#comments" },
 									{ "include": "#types" },
 									{ "include": "#numbers" },
 									{ "include": "#attributes" },
@@ -358,6 +360,7 @@
 								},
 								"end": "(?=$)",
 								"patterns": [
+									{ "include": "#comments" },
 									{ "include": "#types" },
 									{ "include": "#numbers" },
 									{ "include": "#attributes" },
