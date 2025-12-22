@@ -30,7 +30,7 @@
         "languages": [{
             "id": "usl",
             "aliases": ["USL", "usl", "us", "US", "Universal Shading Language", "Universal Shading"],
-            "extensions": [".usl", ".us"],
+            "extensions": [".usl", ".us", ".uslib"],
             "configuration": "./language-configuration.json",
             "icon": {
                 "light": "./images/icon.png",
@@ -42,13 +42,6 @@
             "scopeName": "source.usl",
             "path": "./syntaxes/usl.tmLanguage.json"
         }],
-        "iconThemes": [
-            {
-                "id": "usl-icons",
-                "label": "USL File Icons",
-                "path": "./fileicons/usl-icon-theme.json"
-            }
-        ],
         "configurationDefaults": {
             "editor.tokenColorCustomizations": {
                 "[*]": {
