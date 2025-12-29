@@ -98,7 +98,7 @@ class USLCompletionItemProvider {
             // Rust-style scalar types
             'f16', 'f32', 'f64', 'i8', 'i16', 'i32', 'i64', 'u8', 'u16', 'u32', 'u64',
             // C-style scalar types
-            'bool', 'int', 'uint', 'float', 'half', 'double',
+            'bool', 'int', 'uint', 'float', 'half', 'double', 'char', 'uchar', 'short', 'ushort', 'long', 'ulong',
             'int8', 'int16', 'int32', 'int64',
             'uint8', 'uint16', 'uint32', 'uint64',
             'float16', 'float32', 'float64',
@@ -108,6 +108,13 @@ class USLCompletionItemProvider {
             'uint2', 'uint3', 'uint4',
             'half2', 'half3', 'half4',
             'bool2', 'bool3', 'bool4',
+            'char2', 'char3', 'char4',
+            'uchar2', 'uchar3', 'uchar4',
+            'short2', 'short3', 'short4',
+            'ushort2', 'ushort3', 'ushort4',
+            'long2', 'long3', 'long4',
+            'ulong2', 'ulong3', 'ulong4',
+            'double2', 'double3', 'double4',
             // GLSL vector types
             'vec2', 'vec3', 'vec4',
             'ivec2', 'ivec3', 'ivec4',

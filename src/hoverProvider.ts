@@ -43,8 +43,26 @@ export class USLHoverProvider implements vscode.HoverProvider {
             'uint': '**uint**\n\n32-bit unsigned integer scalar type.',
             'bool': '**bool**\n\nBoolean type.',
             'half': '**half**\n\n16-bit floating-point scalar type.',
+            'char': '**char**\n\n8-bit signed integer scalar type (alias: `int8`).',
+            'uchar': '**uchar**\n\n8-bit unsigned integer scalar type (alias: `uint8`).',
+            'short': '**short**\n\n16-bit signed integer scalar type (alias: `int16`).',
+            'ushort': '**ushort**\n\n16-bit unsigned integer scalar type (alias: `uint16`).',
+            'long': '**long**\n\n64-bit signed integer scalar type (alias: `int64`).',
+            'ulong': '**ulong**\n\n64-bit unsigned integer scalar type (alias: `uint64`).',
             'texture2d': '**texture2d**\n\n2D texture type.\n\nMethods:\n- `sample(sampler, coord)` - Sample texture\n- `read(coord)` - Read texel\n- `write(value, coord)` - Write texel',
             'sampler': '**sampler**\n\nSampler state type for texture sampling.',
+
+            // Vector aliases
+            'char4': '**char4**\n\n4-component 8-bit signed integer vector.',
+            'uchar4': '**uchar4**\n\n4-component 8-bit unsigned integer vector.',
+            'short4': '**short4**\n\n4-component 16-bit signed integer vector.',
+            'ushort4': '**ushort4**\n\n4-component 16-bit unsigned integer vector.',
+            'int4': '**int4**\n\n4-component 32-bit signed integer vector.',
+            'uint4': '**uint4**\n\n4-component 32-bit unsigned integer vector.',
+            'long4': '**long4**\n\n4-component 64-bit signed integer vector.',
+            'ulong4': '**ulong4**\n\n4-component 64-bit unsigned integer vector.',
+            'half4': '**half4**\n\n4-component 16-bit floating-point vector.',
+            'double4': '**double4**\n\n4-component 64-bit floating-point vector.',
 
             // Built-in functions
             'dot': '**dot**(x: T, y: T) -> float\n\nComputes the dot product of two vectors.',

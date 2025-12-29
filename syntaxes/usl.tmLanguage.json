@@ -416,9 +416,9 @@
 					"match": "\\b([iudb]?vec[234]|[iudb]?vec[234]x[234])\\b"
 				},
 				{
-					"comment": "Metal/HLSL vector types (float2, int3, uint4, half2, etc.)",
+					"comment": "Metal/HLSL vector types (float2, int3, uint4, half2, char4, ushort3, long4, etc.)",
 					"name": "storage.type.vector.usl",
-					"match": "\\b(bool|int|uint|float|half|double|short)(2|3|4)\\b"
+					"match": "\\b(bool|int|uint|float|half|double|short|long|char|uchar|ushort|ulong)(2|3|4)\\b"
 				},
 				{
 					"comment": "GLSL matrix types (mat2, mat3, mat4, mat2x3, dmat4x4, etc.)",

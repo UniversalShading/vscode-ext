@@ -1,12 +1,12 @@
 struct Vertex {
   position: float3 #attribute(0)
   texCoord: float2 #attribute(1)
-  normal: float3 #attribute(2)
+  normal:   float3 #attribute(2)
 }
 
 struct Uniforms {
   modelMatrix: float4x4
-  viewMatrix: float4x4
+  viewMatrix:  float4x4
 }
 
 fn vertexShader(input: Vertex #stage_in, uniforms: Uniforms #buffer) -> float4 {
